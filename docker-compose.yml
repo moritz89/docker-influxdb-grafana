@@ -10,7 +10,7 @@ services:
     networks:
       - backend
     volumes:
-      - influx-data:/var/lib/influxdb
+      - /var/lib/influxdb:/var/lib/influxdb
 
 #  telegraf:
 #    image: telegraf:latest
@@ -27,14 +27,11 @@ services:
       - "3000:3000"
     env_file:
       - 'env.grafana'
+      - 'secret.grafana'
     networks:
       - backend
     volumes:
-      - grafana-data:/var/lib/grafana
-
-volumes:
-  influx-data:
-  grafana-data:
+      - /var/lib/grafana:/var/lib/grafana
 
 networks:
   backend:
