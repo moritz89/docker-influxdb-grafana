@@ -1,25 +1,18 @@
-version: "2"
+version: "3"
 services:
   influxdb:
     image: influxdb:latest
     container_name: influxdb
     ports:
-      - "8086"
+      - "8086:8086"
     env_file:
       - 'env.influxdb'
+      - 'secrets.influxdb'
     networks:
       - backend
     volumes:
-      - /var/lib/influxdb:/var/lib/influxdb
-
-#  telegraf:
-#    image: telegraf:latest
-#    container_name: telegraf
-#    networks:
-#      - backend
-#    volumes:
-#      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-
+      - influxdb-data:/var/lib/influxdb
+  
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -27,11 +20,15 @@ services:
       - "3000:3000"
     env_file:
       - 'env.grafana'
-      - 'secret.grafana'
+      - 'secrets.grafana'
     networks:
       - backend
     volumes:
-      - /var/lib/grafana:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
 
 networks:
   backend:
+
+volumes:
+  influxdb-data:
+  grafana-data:
