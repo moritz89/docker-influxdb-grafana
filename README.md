@@ -3,6 +3,14 @@
 # + Grafana stack
 # + Telegraf
 
+## Security notes
+The admin user is created the first time the application is run. The password
+will not be updated in subsequent starts, regardless of what is set in the
+environment variables (secrets.grafana/influxdb). Either change them manually or
+delete the docker volume and all the associated data with
+`docker volume rm *hash*` or `docker volume prune`. Deleting the volumes
+requires the docker instances to be stopped.
+
 Get the stack (only once):
 
 ```
